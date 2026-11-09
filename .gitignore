@@ -1,0 +1,11 @@
+/vendor/
+/composer.lock
+/node_modules/
+/assets/js/*.map
+/.vscode/
+/.idea/
+/tests/output/
+/.DS_Store
+*.log
+*.zip
+*.bak

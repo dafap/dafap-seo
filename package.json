@@ -1,0 +1,31 @@
+{
+  "name": "dafap-seo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@wordpress/components": "^30.6.0",
+    "@wordpress/data": "^10.33.0",
+    "@wordpress/edit-post": "^8.33.2",
+    "@wordpress/editor": "^14.33.2",
+    "@wordpress/element": "^6.33.0",
+    "@wordpress/plugins": "^7.33.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@babel/preset-react": "^7.28.5",
+    "babel-loader": "^10.0.0",
+    "webpack-cli": "^6.0.1"
+  }
+}

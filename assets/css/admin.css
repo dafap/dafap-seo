@@ -1,0 +1,87 @@
+.dafap-seo-score {
+    font-size: 14px;
+    line-height: 1.5;
+}
+.column-dafap_seo_score {
+    text-align: center;
+    font-weight: bold;
+    color: #0073aa;
+}
+.dafap-seo-diagnostic {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 10px;
+}
+.dafap-seo-diagnostic li {
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+/* pour MetaBox tabs */
+.dafap-tab-nav {
+  display: flex;
+  list-style: none;
+  margin-bottom: 10px;
+  padding-left: 0;
+}
+.dafap-tab-nav li {
+  padding: 6px 12px;
+  cursor: pointer;
+  background: #eee;
+  margin-right: 4px;
+}
+.dafap-tab-nav li.active {
+  background: #ddd;
+  font-weight: bold;
+}
+.dafap-tab-content {
+  display: none;
+}
+.dafap-tab-content.active {
+  display: block;
+}
+/* pour MetaBox snippets */
+.dafap-snippets-preview {
+    margin-top: 20px;
+}
+.snippet-preview {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    background: #fff;
+}
+.snippet-box {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+.snippet-box.google .snippet-title {
+    color: #1a0dab;
+    font-size: 16px;
+    font-weight: bold;
+}
+.snippet-box.google .snippet-url {
+    color: #006621;
+    font-size: 13px;
+}
+.snippet-box.google .snippet-description {
+    color: #545454;
+    font-size: 13px;
+}
+.snippet-box.facebook,
+.snippet-box.twitter {
+    display: flex;
+    gap: 10px;
+}
+.snippet-image img {
+    width: 120px;
+    height: auto;
+    object-fit: cover;
+    border: 1px solid #ccc;
+}
+.snippet-meta .snippet-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.snippet-meta .snippet-description {
+    color: #333;
+    font-size: 13px;
+}

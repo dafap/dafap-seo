@@ -1,0 +1,556 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The WordPress plugin contributors
+# This file is distributed under the same license as the PACKAGE package.
+# Alain Pomirol <dafap@dafap.fr>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Dafap SEO 1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/dafap/dafap-seo/issues\n"
+"POT-Creation-Date: 2025-11-02 23:31+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Alain Pomirol <dafap@dafap.fr>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _e;__;esc_html_e;esc_html__\n"
+"X-Generator: Poedit 3.8\n"
+"X-Poedit-Basepath: ../src\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: Admin/Column.php:14
+msgid "Score SEO"
+msgstr ""
+
+#: Admin/Metabox.php:15
+msgid "Analyse SEO complète"
+msgstr ""
+
+#: Admin/Metabox.php:43
+msgid "Choisir une image"
+msgstr ""
+
+#: Admin/Metabox.php:44
+msgid "Utiliser cette image"
+msgstr ""
+
+#: Admin/Metabox.php:54
+msgid "Paramètres SEO"
+msgstr ""
+
+#: Admin/Metabox.php:55
+msgid "Réseaux sociaux"
+msgstr ""
+
+#: Admin/Metabox.php:82
+msgid "Mot-clé principal"
+msgstr ""
+
+#: Admin/Metabox.php:85
+msgid "Titre SEO"
+msgstr ""
+
+#: Admin/Metabox.php:88
+msgid "Meta description"
+msgstr ""
+
+#: Admin/Metabox.php:91
+msgid "Mots-clés secondaires (séparés par des virgules)"
+msgstr ""
+
+#: Admin/Metabox.php:97
+msgid "Score SEO :"
+msgstr ""
+
+#: Admin/Metabox.php:110
+msgid "Analyse effectuée automatiquement à la sauvegarde."
+msgstr ""
+
+#: Admin/Metabox.php:120
+msgid "Titre OG"
+msgstr ""
+
+#: Admin/Metabox.php:123
+msgid "(60 caractères max idéalement)"
+msgstr ""
+
+#: Admin/Metabox.php:129
+msgid "(150-200 caractères idéalement)"
+msgstr ""
+
+#: Admin/Metabox.php:138 Admin/Metabox.php:164
+msgid "Choisir dans la médiathèque"
+msgstr ""
+
+#: Admin/Metabox.php:139
+msgid "Taille recommandée : 1200×630 px"
+msgstr ""
+
+#: Admin/Metabox.php:140
+msgid "Format : JPG ou PNG"
+msgstr ""
+
+#: Admin/Metabox.php:140
+msgid "Poids < 300 Ko"
+msgstr ""
+
+#: Admin/Metabox.php:144 Admin/Metabox.php:168
+msgid "Brève description de l'image. (50-100 caractères idéalement"
+msgstr ""
+
+#: Admin/Metabox.php:170
+msgid "Les champs OG et X permettent d’optimiser l’affichage de votre contenu sur les réseaux sociaux."
+msgstr ""
+
+#: Admin/SettingsPage.php:36
+msgid "Settings"
+msgstr ""
+
+#: Admin/SettingsPage.php:60
+msgid "Profils sociaux"
+msgstr ""
+
+#: Admin/SettingsPage.php:68
+msgid "Page Facebook"
+msgstr ""
+
+#: Admin/SettingsPage.php:76
+msgid "Id de l'application Facebook"
+msgstr ""
+
+#: Admin/SettingsPage.php:84
+msgid "Profil X (Twitter)"
+msgstr ""
+
+#: SEO/Analyzer.php:176
+msgid "Présence du mot-clé dans le Titre SEO"
+msgstr ""
+
+#: SEO/Analyzer.php:181
+msgid "Le mot-clé principal n'est pas présent dans le titre SEO. Ajoutez-le au début du titre pour un meilleur classement."
+msgstr ""
+
+#: SEO/Analyzer.php:186
+msgid "Parfait ! Le mot-clé principal est présent dans le titre SEO."
+msgstr ""
+
+#: SEO/Analyzer.php:192
+msgid "Le mot-clé principal est présent, mais il n'est pas au début du titre. Essayez de le placer le plus tôt possible."
+msgstr ""
+
+#: SEO/Analyzer.php:212
+msgid "Longueur du Titre SEO"
+msgstr ""
+
+#: SEO/Analyzer.php:218
+msgid "La longueur de votre titre SEO est optimale."
+msgstr ""
+
+#: SEO/Analyzer.php:223
+#, php-format
+msgid "Votre titre SEO est trop court (actuel : %d caractères). Visez au moins %d caractères pour être plus descriptif."
+msgstr ""
+
+#: SEO/Analyzer.php:231
+#, php-format
+msgid "Votre titre SEO est trop long (actuel : %d caractères). Il risque d'être tronqué dans les résultats de recherche. Visez moins de %d-%d caractères."
+msgstr ""
+
+#: SEO/Analyzer.php:256
+msgid "Présence du mot-clé dans la Méta Description"
+msgstr ""
+
+#: SEO/Analyzer.php:263
+msgid "La Méta Description n'est pas optimale."
+msgstr ""
+
+#: SEO/Analyzer.php:266
+msgid "Le mot-clé principal n'a pas été défini pour cet article. Impossible d'analyser."
+msgstr ""
+
+#: SEO/Analyzer.php:269
+msgid "Parfait ! Le mot-clé principal est présent dans la Méta Description."
+msgstr ""
+
+#: SEO/Analyzer.php:275
+msgid "Le mot-clé principal est présent, mais il est placé trop loin dans la Méta Description. Pour maximiser le Taux de Clic (CTR), essayez de le placer dans les premières phrases."
+msgstr ""
+
+#: SEO/Analyzer.php:280
+#, php-format
+msgid "Le mot-clé principal ('%s') est absent de la Méta Description. Ajoutez-le pour inciter les utilisateurs à cliquer."
+msgstr ""
+
+#: SEO/Analyzer.php:302
+msgid "Longueur de la Méta Description"
+msgstr ""
+
+#: SEO/Analyzer.php:309
+#, php-format
+msgid "La longueur de votre Méta Description est optimale (%d caractères)."
+msgstr ""
+
+#: SEO/Analyzer.php:315
+#, php-format
+msgid "Votre Méta Description est trop longue (actuel : %d caractères). Elle sera très probablement tronquée par Google, ce qui pourrait masquer l'appel à l'action. Réduisez-la à **%d-%d caractères** maximum."
+msgstr ""
+
+#: SEO/Analyzer.php:326
+#, php-format
+msgid "Votre Méta Description est trop courte (actuel : %d caractères). Vous n'utilisez pas suffisamment d'espace pour inciter au clic. Visez **au moins %d caractères** pour être plus convaincant."
+msgstr ""
+
+#: SEO/Analyzer.php:336
+#, php-format
+msgid "Votre Méta Description est un peu longue (actuel : %d caractères) mais reste dans une zone tolérable. Essayez de la maintenir sous les %d caractères."
+msgstr ""
+
+#: SEO/Analyzer.php:359
+msgid "Présence du mot-clé dans le Titre H1"
+msgstr ""
+
+#: SEO/Analyzer.php:366
+msgid "Le Titre H1 n'est pas optimal."
+msgstr ""
+
+#: SEO/Analyzer.php:369
+msgid "Le mot-clé principal n'a pas été défini. Impossible d'analyser la présence dans le H1."
+msgstr ""
+
+#: SEO/Analyzer.php:372
+msgid "Excellent ! Le mot-clé principal est présent dans le Titre H1, confirmant la pertinence du sujet."
+msgstr ""
+
+#: SEO/Analyzer.php:377
+msgid "Le mot-clé est présent, mais il est placé loin du début du H1. Pour un impact maximal, essayez de le placer dans les premiers mots."
+msgstr ""
+
+#: SEO/Analyzer.php:382
+#, php-format
+msgid "Le mot-clé principal ('%s') est absent du Titre H1. Ceci est une erreur majeure. Assurez-vous que le **H1 contient votre mot-clé** pour signaler le sujet de l'article aux moteurs de recherche."
+msgstr ""
+
+#: SEO/Analyzer.php:405
+#, php-format
+msgid "Mot-clé principal dans l'introduction (%d premiers mots)"
+msgstr ""
+
+#: SEO/Analyzer.php:412
+msgid "L'analyse est incomplète ou le mot-clé est absent de l'introduction."
+msgstr ""
+
+#: SEO/Analyzer.php:415
+msgid "Le mot-clé principal n'est pas défini. Impossible d'analyser l'introduction."
+msgstr ""
+
+#: SEO/Analyzer.php:417
+msgid "Le contenu de l'article est vide ou n'a pas été chargé. Impossible d'analyser."
+msgstr ""
+
+#: SEO/Analyzer.php:432
+#, php-format
+msgid "Excellent ! Le mot-clé principal est présent dans les %d premiers mots, ce qui assure une bonne pertinence thématique dès le début."
+msgstr ""
+
+#: SEO/Analyzer.php:438
+#, php-format
+msgid "Le mot-clé principal ('%s') est absent des %d premiers mots de l'article. C'est une omission importante pour le SEO : intégrez-le naturellement et rapidement."
+msgstr ""
+
+#: SEO/Analyzer.php:462
+msgid "Longueur du contenu de l'article"
+msgstr ""
+
+#: SEO/Analyzer.php:478
+#, php-format
+msgid "Excellent ! Votre article est long (%d mots), ce qui est idéal pour la profondeur thématique et le classement. (Objectif > %d mots)"
+msgstr ""
+
+#: SEO/Analyzer.php:486
+#, php-format
+msgid "La longueur de votre article est correcte (%d mots), mais il pourrait bénéficier de plus de détails et d'une plus grande profondeur. Visez un minimum de **%d mots**."
+msgstr ""
+
+#: SEO/Analyzer.php:494
+#, php-format
+msgid "Votre contenu est relativement court (%d mots). Il manque probablement de profondeur. Le contenu mince est difficile à classer. **Ajoutez du développement pour atteindre au moins %d mots**."
+msgstr ""
+
+#: SEO/Analyzer.php:502
+#, php-format
+msgid "Attention ! Votre article est beaucoup trop court (%d mots) et sera considéré comme du **contenu mince** par les moteurs de recherche. Il est impératif de le développer (Objectif > %d mots)."
+msgstr ""
+
+#: SEO/Analyzer.php:526
+msgid "Densité du mot-clé principal"
+msgstr ""
+
+#: SEO/Analyzer.php:531
+msgid "La densité du mot-clé n'est pas optimale."
+msgstr ""
+
+#: SEO/Analyzer.php:534
+msgid "Le mot-clé principal n'est pas défini. Impossible de calculer la densité."
+msgstr ""
+
+#: SEO/Analyzer.php:536
+msgid "Le contenu de l'article est vide ou n'a pas été chargé. Impossible de calculer la densité."
+msgstr ""
+
+#: SEO/Analyzer.php:548
+msgid "Le contenu est vide. La densité ne peut pas être calculée."
+msgstr ""
+
+#: SEO/Analyzer.php:562
+#, php-format
+msgid "Densité actuelle : %.2f%%"
+msgstr ""
+
+#: SEO/Analyzer.php:571
+msgid " La densité est excellente ! Elle est suffisante sans tomber dans le bourrage de mots-clés (keyword stuffing)."
+msgstr ""
+
+#: SEO/Analyzer.php:577
+#, php-format
+msgid " La densité est faible. Le mot-clé principal ('%s') apparaît trop peu souvent. Ajoutez-le quelques fois de plus dans le texte pour renforcer la pertinence."
+msgstr ""
+
+#: SEO/Analyzer.php:584
+msgid " Attention ! La densité est trop élevée. Cela peut être perçu comme du **bourrage de mots-clés** (keyword stuffing) et nuire à la lisibilité. Réduisez les occurrences en utilisant des synonymes ou des termes secondaires."
+msgstr ""
+
+#: SEO/Analyzer.php:589
+msgid " La densité est critique. Le mot-clé est presque absent du corps de l'article. C'est une erreur majeure de pertinence."
+msgstr ""
+
+#: SEO/Analyzer.php:613
+msgid "Richesse sémantique (Mots-clés secondaires/Synonymes)"
+msgstr ""
+
+#: SEO/Analyzer.php:623
+msgid "Aucun mot-clé secondaire n'a été défini. C'est essentiel pour la richesse sémantique."
+msgstr ""
+
+#: SEO/Analyzer.php:627
+msgid "Le contenu de l'article est vide. Impossible d'analyser la richesse sémantique."
+msgstr ""
+
+#: SEO/Analyzer.php:647
+#, php-format
+msgid "Excellent ! **%d** termes secondaires pertinents (synonymes et concepts connexes) ont été détectés, enrichissant la couverture sémantique du sujet."
+msgstr ""
+
+#: SEO/Analyzer.php:655
+#, php-format
+msgid "Seulement **%d** termes secondaires ont été trouvés. Il en manque au moins %d. Essayez d'intégrer plus de synonymes et de concepts connexes pour approfondir la thématique de l'article."
+msgstr ""
+
+#: SEO/Analyzer.php:661
+msgid "Aucun terme secondaire pertinent n'a été trouvé. Votre contenu est trop centré sur un seul mot-clé. Intégrez des **synonymes** et des mots du **champ lexical** pour améliorer la pertinence et le SEO sémantique."
+msgstr ""
+
+#: SEO/Analyzer.php:682
+msgid "Présence du mot-clé dans l'URL (slug)"
+msgstr ""
+
+#: SEO/Analyzer.php:689
+msgid "L'URL de l'article n'est pas optimale."
+msgstr ""
+
+#: SEO/Analyzer.php:692
+msgid "Le mot-clé principal n'est pas défini. Impossible d'analyser l'URL."
+msgstr ""
+
+#: SEO/Analyzer.php:725
+msgid "Parfait ! Le mot-clé principal est présent dans l'URL, qui est de plus courte et facile à lire."
+msgstr ""
+
+#: SEO/Analyzer.php:730
+#, php-format
+msgid "Le mot-clé est présent, mais l'URL semble trop longue (plus de %d mots importants). Essayez de la raccourcir pour une meilleure expérience utilisateur et SEO."
+msgstr ""
+
+#: SEO/Analyzer.php:739
+#, php-format
+msgid "Le mot-clé principal ('%s') est absent de l'URL. Modifiez le slug pour y inclure votre mot-clé et rendre l'URL plus descriptive."
+msgstr ""
+
+#: SEO/Analyzer.php:761
+msgid "Maillage interne (Liens vers votre site)"
+msgstr ""
+
+#: SEO/Analyzer.php:765
+msgid "Le maillage interne n'est pas optimal."
+msgstr ""
+
+#: SEO/Analyzer.php:771
+msgid "Le contenu de l'article est vide. Impossible d'analyser le maillage interne."
+msgstr ""
+
+#: SEO/Analyzer.php:804
+#, php-format
+msgid "Excellent ! Votre article contient **%d** liens internes, renforçant le maillage de votre site et la distribution du PageRank."
+msgstr ""
+
+#: SEO/Analyzer.php:812
+#, php-format
+msgid "Seulement **%d** liens internes trouvés. Il est fortement recommandé d'insérer au moins **%d liens internes** pour améliorer l'exploration et la pertinence thématique (SEO)."
+msgstr ""
+
+#: SEO/Analyzer.php:820
+msgid "Pas de lien interne trouvé. Le maillage interne est un pilier du SEO ! Ajoutez immédiatement des liens vers d'autres articles pertinents de votre site."
+msgstr ""
+
+#: SEO/Analyzer.php:840
+msgid "Liens externes (vers des sources d'autorité)"
+msgstr ""
+
+#: SEO/Analyzer.php:844
+msgid "Les liens externes ne sont pas optimaux."
+msgstr ""
+
+#: SEO/Analyzer.php:852
+msgid "Le contenu de l'article est vide. Impossible d'analyser les liens externes."
+msgstr ""
+
+#: SEO/Analyzer.php:886
+#, php-format
+msgid "Très bien ! Votre article contient **%d** lien(s) externe(s) vers des sources de qualité, renforçant la crédibilité de votre contenu."
+msgstr ""
+
+#: SEO/Analyzer.php:894
+#, php-format
+msgid "Peu de liens externes (%d). Il en faudrait au moins %d."
+msgstr ""
+
+#: SEO/Analyzer.php:901
+msgid "Pas de lien externe trouvé. Ajoutez **au moins un lien sortant** vers une source d'autorité et pertinente pour valider vos informations (E-E-A-T)."
+msgstr ""
+
+#: SEO/Analyzer.php:922
+msgid "Optimisation des images (Texte Alternatif)"
+msgstr ""
+
+#: SEO/Analyzer.php:933
+msgid "Le contenu de l'article est vide. Impossible d'analyser les images."
+msgstr ""
+
+#: SEO/Analyzer.php:935
+msgid "Le mot-clé principal n'est pas défini. Impossible de vérifier l'inclusion du mot-clé dans le texte alternatif."
+msgstr ""
+
+#: SEO/Analyzer.php:946
+msgid "Aucune image n'a été trouvée dans le contenu. Il est fortement recommandé d'ajouter des images pertinentes pour améliorer l'expérience utilisateur et l'accessibilité."
+msgstr ""
+
+#: SEO/Analyzer.php:973
+#, php-format
+msgid "Parfait ! **%d** image(s) possède(nt) un attribut `alt` contenant le mot-clé principal. Continuez d'optimiser toutes vos images."
+msgstr ""
+
+#: SEO/Analyzer.php:981
+#, php-format
+msgid "Toutes les images n'ont pas un texte alternatif optimisé. **%d** image(s) ont un `alt` text, mais aucune ne contient le mot-clé principal. Intégrez le mot-clé dans au moins une description d'image."
+msgstr ""
+
+#: SEO/Analyzer.php:989
+#, php-format
+msgid "Attention ! Aucune des **%d** image(s) n'a d'attribut `alt` renseigné ou il est vide. L'attribut `alt` est essentiel pour l'accessibilité et le référencement des images. Corrigez immédiatement."
+msgstr ""
+
+#: SEO/Analyzer.php:1014
+msgid "Structure des titres (Hn) et inclusion du mot-clé"
+msgstr ""
+
+#: SEO/Analyzer.php:1019
+msgid "La structure des titres n'est pas optimisée."
+msgstr ""
+
+#: SEO/Analyzer.php:1030
+msgid "Le contenu de l'article est vide. Impossible d'analyser la structure des titres."
+msgstr ""
+
+#: SEO/Analyzer.php:1044
+msgid "CRITIQUE: Plusieurs balises H1 détectées dans le contenu. Un article ne doit avoir qu'**un seul H1**."
+msgstr ""
+
+#: SEO/Analyzer.php:1054
+#, php-format
+msgid "Erreur de hiérarchie: Saut de niveau détecté (ex: H%d est suivi de H%d). Respectez la séquence: H2 après H1, H3 après H2, etc. pour une meilleure lisibilité."
+msgstr ""
+
+#: SEO/Analyzer.php:1075
+msgid "La structure des titres est logique et bien organisée."
+msgstr ""
+
+#: SEO/Analyzer.php:1082
+#, php-format
+msgid " Cependant, le mot-clé principal ('%s') n'est pas inclus dans un sous-titre (H2 ou H3). Intégrez-le naturellement dans un sous-titre pour renforcer la pertinence."
+msgstr ""
+
+#: SEO/Analyzer.php:1107
+msgid "Longueur des blocs de texte (P, TD, TH, LI, DIV)"
+msgstr ""
+
+#: SEO/Analyzer.php:1111
+msgid "La lisibilité est impactée par la longueur des blocs de texte."
+msgstr ""
+
+#: SEO/Analyzer.php:1119
+msgid "Le contenu de l'article est vide. Impossible d'analyser la longueur des paragraphes."
+msgstr ""
+
+#: SEO/Analyzer.php:1137
+msgid "Aucun bloc de texte significatif (<p>, <td>, etc.) n'a été trouvé. Assurez-vous que l'article contient du contenu structuré."
+msgstr ""
+
+#: SEO/Analyzer.php:1157
+#, php-format
+msgid "Excellent ! Seuls %d blocs de texte(s) sur %d dépassent la limite de %d mots. La lisibilité est bonne."
+msgstr ""
+
+#: SEO/Analyzer.php:1166
+#, php-format
+msgid "Attention ! %d blocs sur %d (soit %.1f%%) sont trop longs. Ceci inclut des paragraphes, des cellules de tableau, ou des éléments de liste. Essayez de les diviser en blocs de texte plus courts (max **%d mots**) pour améliorer la lisibilité sur mobile."
+msgstr ""
+
+#: SEO/Analyzer.php:1176
+#, php-format
+msgid "CRITIQUE : Une majorité de vos blocs de texte (%.1f%%) sont trop longs. Cela nuit sévèrement à la lecture rapide et à l'expérience utilisateur. **Divisez-les**."
+msgstr ""
+
+#: SEO/Analyzer.php:1200
+msgid "Usage de la voix passive"
+msgstr ""
+
+#: SEO/Analyzer.php:1204
+msgid "L'usage de la voix passive est trop élevé."
+msgstr ""
+
+#: SEO/Analyzer.php:1207
+msgid "Le contenu de l'article est vide. Impossible d'analyser l'usage de la voix passive."
+msgstr ""
+
+#: SEO/Analyzer.php:1217
+msgid "Moins d'une phrase détectée. Impossible d'analyser la voix passive."
+msgstr ""
+
+#: SEO/Analyzer.php:1253
+#, php-format
+msgid "Ratio de phrases à la voix passive : **%.1f%%** sur %d phrases."
+msgstr ""
+
+#: SEO/Analyzer.php:1262
+msgid " Excellent ! L'usage de la voix passive est très faible. Le contenu est clair et dynamique."
+msgstr ""
+
+#: SEO/Analyzer.php:1267
+msgid " Le ratio est tolérable mais pourrait être amélioré. Essayez de reformuler certaines phrases pour utiliser la voix active."
+msgstr ""
+
+#: SEO/Analyzer.php:1272
+msgid " L'usage de la voix passive est trop élevé. Cela rend votre texte lourd et moins direct. **Reformulez les phrases concernées** pour passer à la voix active."
+msgstr ""
