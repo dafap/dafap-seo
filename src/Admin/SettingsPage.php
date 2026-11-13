@@ -14,7 +14,7 @@ class SettingsPage
         add_action('admin_menu', [self::class, 'addMenu']);
         add_action('admin_init', [self::class, 'registerSettings']);
         add_filter(
-            'plugin_action_links_' . PLUGIN_BASENAME,
+            'plugin_action_links_' . DAFAPSEO_BASENAME,
             [self::class, 'add_settings_link']
         );
     }

@@ -14,7 +14,7 @@ class Metabox
             'dafap_seo_metabox',
             __('Analyse SEO complète', DAFAPSEO_TEXTDOMAIN),
             [self::class, 'render'],
-            ['post'], // Tu peux ajouter des CPT ici
+            ['post'],
             'normal',
             'default'
         );
@@ -23,7 +23,7 @@ class Metabox
     public static function enqueueAssetsJS(): void
     {
         $screen = get_current_screen();
-        if ($screen && in_array($screen->post_type, ['post'])) { // Ajoute ici tes CPT si besoin
+        if ($screen && in_array($screen->post_type, ['post'])) {
             wp_enqueue_script(
                 'dafap-seo-metabox-tabs',
                 plugin_dir_url(__FILE__) . '../../assets/js/metabox-tabs.js',
@@ -31,7 +31,7 @@ class Metabox
                 DAFAPSEO_VERSION,
                 true
             );
-            wp_enqueue_media(); // nécessaire pour wp.media
+            wp_enqueue_media();
             wp_enqueue_script(
                 'dafap-seo-metabox-media',
                 plugin_dir_url(__FILE__) . '../../assets/js/metabox-media.js',
@@ -77,7 +77,7 @@ class Metabox
         if ($score === '') {
             $score = Score::compute_score($post->ID);
         }
-        $diagnostic = \DafapSEO\SEO\Analyzer::diagnose($post->ID);
+        $diagnostic = Analyzer::diagnose($post->ID);
         wp_nonce_field(Config::NONCE['metabox']['action'], Config::NONCE['metabox']['field_name']);
 
         echo '<p><label for="' . Config::FIELDS['form_fields']['focus_kw'] . '">' . __('Mot-clé principal', DAFAPSEO_TEXTDOMAIN) . '</label><br>';
@@ -102,7 +102,7 @@ class Metabox
             $status_icon = $item['status'] === 'ok' ? '✅' : '⚠️';
             echo '<li>';
             echo $status_icon . ' <strong>' . esc_html($item['label']) . '</strong> (' . $item['score'] . '/100)';
-            if ($item['suggestion']) {
+            if (!empty($item['suggestion'])) {
                 echo '<br><em>' . esc_html($item['suggestion']) . '</em>';
             }
             echo '</li>';
@@ -114,66 +114,77 @@ class Metabox
 
     private static function renderSocialFields(\WP_Post $post): void
     {
-        $meta = get_post_meta($post->ID);
+        $og_title = get_post_meta($post->ID, Config::FIELDS['social']['plugin_fields']['og_title'], true);
+        $og_desc  = get_post_meta($post->ID, Config::FIELDS['social']['plugin_fields']['og_desc'], true);
+        $og_image = get_post_meta($post->ID, Config::FIELDS['social']['plugin_fields']['og_image'], true);
+        $og_alt   = get_post_meta($post->ID, Config::FIELDS['social']['plugin_fields']['og_image_alt'], true);
+
+        $x_title  = get_post_meta($post->ID, Config::FIELDS['social']['plugin_fields']['x_title'], true);
+        $x_desc   = get_post_meta($post->ID, Config::FIELDS['social']['plugin_fields']['x_desc'], true);
+        $x_image  = get_post_meta($post->ID, Config::FIELDS['social']['plugin_fields']['x_image'], true);
+        $x_alt    = get_post_meta($post->ID, Config::FIELDS['social']['plugin_fields']['x_image_alt'], true);
 
         $attr = Config::FIELDS['social']['form_fields']['og_title'];
         echo '<p><strong>Open Graph</strong></p>';
         echo '<p><label for="' . $attr . '">' . __('Titre OG') . '</label><br />';
-        echo '<input type="text" name="' . $attr . '" id="' . $attr . '" value="' .
-            esc_attr($meta[Config::FIELDS['social']['plugin_fields']['og_title']][0] ?? '') . '" class="widefat" /><br />';
+        echo '<input type="text" name="' . $attr . '" id="' . $attr . '" value="' . esc_attr($og_title) . '" class="widefat" /><br />';
         echo '<span style="color: blue; font-size: 80%">' . __('(60 caractères max idéalement)') . '</span></p>';
 
         $attr = Config::FIELDS['social']['form_fields']['og_desc'];
         echo '<p><label for="' . $attr . '">Description OG</label><br />';
-        echo '<textarea name="' . $attr . '" id="' . $attr . '" class="widefat">' .
-            esc_textarea($meta[Config::FIELDS['social']['plugin_fields']['og_desc']][0] ?? '') . '</textarea><br />';
+        echo '<textarea name="' . $attr . '" id="' . $attr . '" class="widefat">' . esc_textarea($og_desc) . '</textarea><br />';
         echo '<span style="color: blue; font-size: 80%">' . __('(150-200 caractères idéalement)') . '</span></p>';
 
         $attr = Config::FIELDS['social']['form_fields']['og_image'];
         $attr_alt = Config::FIELDS['social']['form_fields']['og_image_alt'];
         echo '<p><label for="' . $attr . '">Image OG (URL)</label><br />';
-        echo '<input type="text" name="' . $attr . '" id="' . $attr . '" value="' .
-            esc_attr($meta[Config::FIELDS['social']['plugin_fields']['og_image']][0] ?? '') . '" class="widefat" />' .
+        echo '<input type="text" name="' . $attr . '" id="' . $attr . '" value="' . esc_attr($og_image) . '" class="widefat" />' .
             '<div class="image-preview" data-preview="' . $attr . '"></div>' .
             '<button type="button" class="button select-media" data-target="' . $attr . '" data-alt="' . $attr_alt . '">' .
             __('Choisir dans la médiathèque') . '</button><br />';
         echo '<span style="color: blue; font-size: 80%">' . __('Taille recommandée : 1200×630 px') . '<br />';
         echo __('Format : JPG ou PNG') . '<br />' . __('Poids < 300 Ko') . '</span><br />';
         echo '<label for="' . $attr_alt . '">Texte alternatif</label><br />';
-        echo '<input type="text" name="' . $attr_alt . '" id="' . $attr_alt . '" value="' .
-            esc_attr($meta[Config::FIELDS['social']['plugin_fields']['og_image_alt']][0] ?? '') . '" class="widefat" /><br />';
-        echo '<span style="color: blue; font-size: 80%">' . __('Brève description de l\'image. (50-100 caractères idéalement') . '</span></p>';
+        echo '<input type="text" name="' . $attr_alt . '" id="' . $attr_alt . '" value="' . esc_attr($og_alt) . '" class="widefat" /><br />';
+        echo '<span style="color: blue; font-size: 80%">' . __('Brève description de l\'image. (50-100 caractères idéalement)') . '</span></p>';
 
         $attr = Config::FIELDS['social']['form_fields']['x_title'];
         echo '<p><strong>Twitter / X</strong></p>';
         echo '<p><label for="' . $attr . '">Titre X</label><br />';
-        echo '<input type="text" name="' . $attr . '" id="' . $attr . '" value="' .
-            esc_attr($meta[Config::FIELDS['social']['plugin_fields']['x_title']][0] ?? '') . '" class="widefat" />';
+        echo '<input type="text" name="' . $attr . '" id="' . $attr . '" value="' . esc_attr($x_title) . '" class="widefat" /></p>';
 
         $attr = Config::FIELDS['social']['form_fields']['x_desc'];
         echo '<p><label for="' . $attr . '">Description X</label><br />';
-        echo '<textarea name="' . $attr . '" id="' . $attr . '" class="widefat">' .
-            esc_textarea($meta[Config::FIELDS['social']['plugin_fields']['x_desc']][0] ?? '') . '</textarea></p>';
+        echo '<textarea name="' . $attr . '" id="' . $attr . '" class="widefat">' . esc_textarea($x_desc) . '</textarea></p>';
 
         $attr = Config::FIELDS['social']['form_fields']['x_image'];
         $attr_alt = Config::FIELDS['social']['form_fields']['x_image_alt'];
         echo '<p><label for="' . $attr . '">Image X (URL)</label><br />';
-        echo '<input type="text" name="' . $attr . '" id="' . $attr . '" value="' .
-            esc_attr($meta[Config::FIELDS['social']['plugin_fields']['x_image']][0] ?? '') . '" class="widefat" />' .
+        echo '<input type="text" name="' . $attr . '" id="' . $attr . '" value="' . esc_attr($x_image) . '" class="widefat" />' .
             '<div class="image-preview" data-preview="' . $attr . '"></div>' .
             '<button type="button" class="button select-media" data-target="' . $attr . '" data-alt="' . $attr_alt . '">' .
             __('Choisir dans la médiathèque') . '</button><br />';
         echo '<label for="' . $attr_alt . '">Texte alternatif</label><br />';
-        echo '<input type="text" name="' . $attr_alt . '" id="' . $attr_alt . '" value="' .
-            esc_attr($meta[Config::FIELDS['social']['plugin_fields']['x_image_alt']][0] ?? '') . '" class="widefat" /><br />';
-        echo '<span style="color: blue; font-size: 80%">' . __('Brève description de l\'image. (50-100 caractères idéalement') . '</span></p>';
+        echo '<input type="text" name="' . $attr_alt . '" id="' . $attr_alt . '" value="' . esc_attr($x_alt) . '" class="widefat" /><br />';
+        echo '<span style="color: blue; font-size: 80%">' . __('Brève description de l\'image. (50-100 caractères idéalement)') . '</span></p>';
 
         echo '<p style="font-size:12px;color:#666;">' . __('Les champs OG et X permettent d’optimiser l’affichage de votre contenu sur les réseaux sociaux.', DAFAPSEO_TEXTDOMAIN) . '</p>';
     }
 
     public static function renderSnippets(\WP_Post $post): void
     {
-        $meta = get_post_meta($post->ID);
+        $seo_title = get_post_meta($post->ID, Config::FIELDS['plugin_fields']['seo_title'], true);
+        $seo_desc  = get_post_meta($post->ID, Config::FIELDS['plugin_fields']['seo_meta_desc'], true);
+
+        $og_title  = get_post_meta($post->ID, Config::FIELDS['social']['plugin_fields']['og_title'], true);
+        $og_desc   = get_post_meta($post->ID, Config::FIELDS['social']['plugin_fields']['og_desc'], true);
+        $og_image  = get_post_meta($post->ID, Config::FIELDS['social']['plugin_fields']['og_image'], true);
+        $og_alt    = get_post_meta($post->ID, Config::FIELDS['social']['plugin_fields']['og_image_alt'], true);
+
+        $x_title   = get_post_meta($post->ID, Config::FIELDS['social']['plugin_fields']['x_title'], true);
+        $x_desc    = get_post_meta($post->ID, Config::FIELDS['social']['plugin_fields']['x_desc'], true);
+        $x_image   = get_post_meta($post->ID, Config::FIELDS['social']['plugin_fields']['x_image'], true);
+        $x_alt     = get_post_meta($post->ID, Config::FIELDS['social']['plugin_fields']['x_image_alt'], true);
     ?>
         <div class="dafap-snippets-preview">
             <h3>Aperçus de publication</h3>
@@ -181,9 +192,9 @@ class Metabox
             <div class="snippet-preview google-snippet">
                 <h4>🔍 Google (résultat de recherche)</h4>
                 <div class="snippet-box google">
-                    <div class="snippet-title"><?php echo esc_html($meta[Config::FIELDS['plugin_fields']['seo_title']][0]); ?></div>
+                    <div class="snippet-title"><?php echo esc_html($seo_title); ?></div>
                     <div class="snippet-url"><?php echo esc_url(get_permalink($post)); ?></div>
-                    <div class="snippet-description"><?php echo esc_html($meta[Config::FIELDS['plugin_fields']['seo_meta_desc']][0]); ?></div>
+                    <div class="snippet-description"><?php echo esc_html($seo_desc); ?></div>
                 </div>
             </div>
 
@@ -191,12 +202,12 @@ class Metabox
                 <h4>📘 Facebook</h4>
                 <div class="snippet-box facebook">
                     <div class="snippet-image">
-                        <img src="<?php echo esc_url($meta[Config::FIELDS['social']['plugin_fields']['og_image']][0]); ?>" 
-                        alt="<?php echo esc_attr($meta[Config::FIELDS['social']['plugin_fields']['og_image_alt']][0]); ?>" />
+                        <img src="<?php echo esc_url($og_image); ?>" 
+                        alt="<?php echo esc_attr($og_alt); ?>" />
                     </div>
                     <div class="snippet-meta">
-                        <div class="snippet-title"><?php echo esc_html($meta[Config::FIELDS['social']['plugin_fields']['og_title']][0]); ?></div>
-                        <div class="snippet-description"><?php echo esc_html($meta[Config::FIELDS['social']['plugin_fields']['og_desc']][0]); ?></div>
+                        <div class="snippet-title"><?php echo esc_html($og_title); ?></div>
+                        <div class="snippet-description"><?php echo esc_html($og_desc); ?></div>
                         <div class="snippet-url"><?php echo esc_url(get_permalink($post)); ?></div>
                     </div>
                 </div>
@@ -206,12 +217,12 @@ class Metabox
                 <h4>🐦 X (anciennement Twitter)</h4>
                 <div class="snippet-box twitter">
                     <div class="snippet-image">
-                        <img src="<?php echo esc_url($meta[Config::FIELDS['social']['plugin_fields']['x_image']][0]); ?>" 
-                        alt="<?php echo esc_attr($meta[Config::FIELDS['social']['plugin_fields']['x_image_alt']][0]); ?>" />
+                        <img src="<?php echo esc_url($x_image); ?>" 
+                        alt="<?php echo esc_attr($x_alt); ?>" />
                     </div>
                     <div class="snippet-meta">
-                        <div class="snippet-title"><?php echo esc_html($meta[Config::FIELDS['social']['plugin_fields']['x_title']][0]); ?></div>
-                        <div class="snippet-description"><?php echo esc_html($meta[Config::FIELDS['social']['plugin_fields']['x_desc']][0]); ?></div>
+                        <div class="snippet-title"><?php echo esc_html($x_title); ?></div>
+                        <div class="snippet-description"><?php echo esc_html($x_desc); ?></div>
                     </div>
                 </div>
             </div>

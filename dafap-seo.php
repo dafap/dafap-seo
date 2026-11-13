@@ -48,6 +48,9 @@ if ( ! defined( 'DAFAPSEO_PATH' ) ) {
 if ( ! defined( 'DAFAPSEO_TEXTDOMAIN' ) ) {
     define( 'DAFAPSEO_TEXTDOMAIN', $text_domain );
 }
+if ( ! defined( 'DAFAPSEO_BASENAME' ) ) {
+    define( 'DAFAPSEO_BASENAME', plugin_basename( __FILE__ ) );
+}
 
 // 1. Chargement de l'Autoloader de Composer
 require_once DAFAPSEO_PATH . 'vendor/autoload.php';
