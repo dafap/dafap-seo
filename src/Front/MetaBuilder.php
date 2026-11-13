@@ -77,20 +77,23 @@ class MetaBuilder
     protected function getMetaValues(): array
     {
         $title = Sanitizer::getPostMetaOrDefault($this->post->ID, Config::FIELDS['plugin_fields']['seo_title'], '');
+        $title = $title ?: get_the_title($this->post);
         $og_title = Sanitizer::getPostMetaOrDefault($this->post->ID, Config::FIELDS['social']['plugin_fields']['og_title'], $title);
         $x_title = Sanitizer::getPostMetaOrDefault($this->post->ID, Config::FIELDS['social']['plugin_fields']['x_title'], $og_title);
         $desc = Sanitizer::getPostMetaOrDefault($this->post->ID, Config::FIELDS['plugin_fields']['seo_meta_desc'], '');
+        $desc = $desc ?: get_the_excerpt($this->post);
         $focus = Sanitizer::getPostMetaOrDefault($this->post->ID, Config::FIELDS['plugin_fields']['focus_kw']);
         $secondary = Sanitizer::getPostMetaOrDefault($this->post->ID, Config::FIELDS['plugin_fields']['secondary_kws']);
         $images = SocialImageBuilder::getSocialImages($this->post->ID);
-        $og_image = $images['og']['url'];
-        $og_image_alt = $images['og']['alt'];
-        $x_image = $images['x']['url'];
-        $x_image_alt = $images['x']['alt'];
+        $og_image = $images['og']['url'] ?? '';
+        $og_image_alt = $images['og']['alt'] ?? '';
+        $x_image = $images['x']['url'] ?? '';
+        $x_image_alt = $images['x']['alt'] ?? '';
+        
 
         return [
-            'title' => $title ?: get_the_title($this->post),
-            'desc' => $desc ?: get_the_excerpt($this->post),
+            'title' => is_string($title) ? $title : '',
+            'desc' => is_string($desc) ? $desc : '',
             'keywords' => $this->buildKeywordsString($focus, $secondary),
             'og_tite' => $og_title,
             'og_desc' => Sanitizer::getPostMetaOrDefault($this->post->ID, Config::FIELDS['social']['plugin_fields']['og_desc'], ''),
@@ -144,11 +147,21 @@ class MetaBuilder
      * @param string $secondary Liste secondaire séparée par des virgules
      * @return string Chaîne de mots-clés séparés par virgule
      */
-    public function buildKeywordsString(string $focus, string $secondary): string
+    public function buildKeywordsString(?string $focus = '', ?string $secondary = ''): string
     {
+        // Sécurisation contre les passages explicites de null
+        $secondary = $secondary ?? '';
+        $focus     = $focus ?? '';
+
         $keywords = array_map('trim', explode(',', $secondary));
-        array_unshift($keywords, $focus);
+
+        if ($focus !== '') {
+            array_unshift($keywords, $focus);
+        }
+
+        // array_filter supprime les chaînes vides ou nulles résultantes
         $keywords = array_filter($keywords);
+
         return implode(', ', $keywords);
     }
 }

@@ -37,8 +37,8 @@ class SocialImageBuilder
         // 4. Fallback → première image dans le contenu
         if (empty($ogImage)) {
             if ($fallback = self::extractFirstImageWithAlt($postId)) {};
-            $ogImage = $fallback['url'];
-            $ogAlt   = $fallback['alt'];
+            $ogImage = $fallback['url'] ?? null;
+            $ogAlt   = $fallback['alt'] ?? '';
         }
 
         // 5. Fallback Twitter → Facebook
