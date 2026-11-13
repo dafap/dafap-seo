@@ -173,23 +173,23 @@ class Analyzer
      */
     private static function check_presence_mot_cle_titre(): array
     {
-        $label = __("Présence du mot-clé dans le Titre SEO", PLUGIN_DATA['TextDomain']);
+        $label = __("Présence du mot-clé dans le Titre SEO", DAFAPSEO_TEXTDOMAIN);
         $weight = self::get_weight(__FUNCTION__);
         $title = self::$postData['seo_title'] ?? self::$postData['title']; // Récupération du titre
 
         $status = 'warn';
-        $suggestion = __("Le mot-clé principal n'est pas présent dans le titre SEO. Ajoutez-le au début du titre pour un meilleur classement.", PLUGIN_DATA['TextDomain']);
+        $suggestion = __("Le mot-clé principal n'est pas présent dans le titre SEO. Ajoutez-le au début du titre pour un meilleur classement.", DAFAPSEO_TEXTDOMAIN);
         $score = 0;
 
         if (stripos($title, self::$focusKeyword) !== false) {
             $status = 'ok';
-            $suggestion = __("Parfait ! Le mot-clé principal est présent dans le titre SEO.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Parfait ! Le mot-clé principal est présent dans le titre SEO.", DAFAPSEO_TEXTDOMAIN);
             $score = $weight;
 
             // Logique de 'warn' si présent mais pas au début (pour 5/10 points)
             if (stripos(trim($title), self::$focusKeyword) > 10) {
                 $status = 'warn';
-                $suggestion = __("Le mot-clé principal est présent, mais il n'est pas au début du titre. Essayez de le placer le plus tôt possible.", PLUGIN_DATA['TextDomain']);
+                $suggestion = __("Le mot-clé principal est présent, mais il n'est pas au début du titre. Essayez de le placer le plus tôt possible.", DAFAPSEO_TEXTDOMAIN);
                 $score = $weight / 2;
             }
         }
@@ -209,18 +209,18 @@ class Analyzer
      */
     private static function check_longueur_titre_seo(): array
     {
-        $label = __("Longueur du Titre SEO", PLUGIN_DATA['TextDomain']);
+        $label = __("Longueur du Titre SEO", DAFAPSEO_TEXTDOMAIN);
         $weight = self::get_weight(__FUNCTION__);
         $title = self::$postData['seo_title'] ?? self::$postData['title'];
         $length = mb_strlen($title);
         $score = $weight;
         $status = 'ok';
-        $suggestion = __("La longueur de votre titre SEO est optimale.", PLUGIN_DATA['TextDomain']);
+        $suggestion = __("La longueur de votre titre SEO est optimale.", DAFAPSEO_TEXTDOMAIN);
 
         if ($length < Config::CRITERES['longueur_titre_seo']['min']) {
             $status = 'warn';
             $suggestion = sprintf(
-                __("Votre titre SEO est trop court (actuel : %d caractères). Visez au moins %d caractères pour être plus descriptif.", PLUGIN_DATA['TextDomain']),
+                __("Votre titre SEO est trop court (actuel : %d caractères). Visez au moins %d caractères pour être plus descriptif.", DAFAPSEO_TEXTDOMAIN),
                 $length,
                 Config::CRITERES['longueur_titre_seo']['warn_low']
             );
@@ -228,7 +228,7 @@ class Analyzer
         } elseif ($length > Config::CRITERES['longueur_titre_seo']['warn_high']) {
             $status = 'warn';
             $suggestion = sprintf(
-                __("Votre titre SEO est trop long (actuel : %d caractères). Il risque d'être tronqué dans les résultats de recherche. Visez moins de %d-%d caractères.", PLUGIN_DATA['TextDomain']),
+                __("Votre titre SEO est trop long (actuel : %d caractères). Il risque d'être tronqué dans les résultats de recherche. Visez moins de %d-%d caractères.", DAFAPSEO_TEXTDOMAIN),
                 $length,
                 Config::CRITERES['longueur_titre_seo']['max'],
                 Config::CRITERES['longueur_titre_seo']['warn_high']
@@ -253,20 +253,20 @@ class Analyzer
      */
     private static function check_presence_mot_cle_meta_desc(): array
     {
-        $label = __("Présence du mot-clé dans la Méta Description", PLUGIN_DATA['TextDomain']);
+        $label = __("Présence du mot-clé dans la Méta Description", DAFAPSEO_TEXTDOMAIN);
         $weight = self::get_weight(__FUNCTION__);
         // Récupération de la méta-description et du mot-clé.
         // Dans un environnement réel, cela utiliserait self::$postData et self::$focusKeyword.
         $metaDescription = self::$postData['meta_description'] ?? '';
         $keyword = self::$focusKeyword;
         $status = 'warn';
-        $suggestion = __("La Méta Description n'est pas optimale.", PLUGIN_DATA['TextDomain']);
+        $suggestion = __("La Méta Description n'est pas optimale.", DAFAPSEO_TEXTDOMAIN);
         $score = 0;
         if (empty($keyword)) {
-            $suggestion = __("Le mot-clé principal n'a pas été défini pour cet article. Impossible d'analyser.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Le mot-clé principal n'a pas été défini pour cet article. Impossible d'analyser.", DAFAPSEO_TEXTDOMAIN);
         } elseif (stripos($metaDescription, $keyword) !== false) {
             $status = 'ok';
-            $suggestion = __("Parfait ! Le mot-clé principal est présent dans la Méta Description.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Parfait ! Le mot-clé principal est présent dans la Méta Description.", DAFAPSEO_TEXTDOMAIN);
             $score = $weight;
             // Logique de 'warn' si présent mais pas au début (pour un meilleur CTR)
             // Si le mot-clé commence après le 50ème caractère, c'est moins visible.
@@ -277,7 +277,7 @@ class Analyzer
             }
         } else {
             $suggestion = sprintf(
-                __("Le mot-clé principal ('%s') est absent de la Méta Description. Ajoutez-le pour inciter les utilisateurs à cliquer.", PLUGIN_DATA['TextDomain']),
+                __("Le mot-clé principal ('%s') est absent de la Méta Description. Ajoutez-le pour inciter les utilisateurs à cliquer.", DAFAPSEO_TEXTDOMAIN),
                 $keyword
             );
             $score = 0;
@@ -299,20 +299,20 @@ class Analyzer
      */
     private static function check_longueur_meta_desc(): array
     {
-        $label = __("Longueur de la Méta Description", PLUGIN_DATA['TextDomain']);
+        $label = __("Longueur de la Méta Description", DAFAPSEO_TEXTDOMAIN);
         $weight = self::get_weight(__FUNCTION__);
         // Récupération de la méta-description (doit être chargé dans loadPostData)
         $metaDescription = self::$postData['meta_description'] ?? '';
         // Utilisation de mb_strlen pour compter correctement les caractères multi-octets (accents, etc.)
         $length = mb_strlen($metaDescription);
         $status = 'ok';
-        $suggestion = sprintf(__("La longueur de votre Méta Description est optimale (%d caractères).", PLUGIN_DATA['TextDomain']), $length);
+        $suggestion = sprintf(__("La longueur de votre Méta Description est optimale (%d caractères).", DAFAPSEO_TEXTDOMAIN), $length);
         $score = $weight;
         // Seuil d'avertissement haut (troncation par les moteurs de recherche)
         if ($length > Config::CRITERES['longueur_meta_desc']['warn_high']) {
             $status = 'warn';
             $suggestion = sprintf(
-                __("Votre Méta Description est trop longue (actuel : %d caractères). Elle sera très probablement tronquée par Google, ce qui pourrait masquer l'appel à l'action. Réduisez-la à **%d-%d caractères** maximum.", PLUGIN_DATA['TextDomain']),
+                __("Votre Méta Description est trop longue (actuel : %d caractères). Elle sera très probablement tronquée par Google, ce qui pourrait masquer l'appel à l'action. Réduisez-la à **%d-%d caractères** maximum.", DAFAPSEO_TEXTDOMAIN),
                 $length,
                 Config::CRITERES['longueur_meta_desc']['max'],
                 Config::CRITERES['longueur_meta_desc']['warn_high']
@@ -323,7 +323,7 @@ class Analyzer
         elseif ($length < Config::CRITERES['longueur_meta_desc']['min']) {
             $status = 'warn';
             $suggestion = sprintf(
-                __("Votre Méta Description est trop courte (actuel : %d caractères). Vous n'utilisez pas suffisamment d'espace pour inciter au clic. Visez **au moins %d caractères** pour être plus convaincant.", PLUGIN_DATA['TextDomain']),
+                __("Votre Méta Description est trop courte (actuel : %d caractères). Vous n'utilisez pas suffisamment d'espace pour inciter au clic. Visez **au moins %d caractères** pour être plus convaincant.", DAFAPSEO_TEXTDOMAIN),
                 $length,
                 Config::CRITERES['longueur_meta_desc']['min']
             );
@@ -333,7 +333,7 @@ class Analyzer
         elseif ($length > Config::CRITERES['longueur_meta_desc']['max'] && $length <= Config::CRITERES['longueur_meta_desc']['warn_high']) {
             $status = 'warn';
             $suggestion = sprintf(
-                __("Votre Méta Description est un peu longue (actuel : %d caractères) mais reste dans une zone tolérable. Essayez de la maintenir sous les %d caractères.", PLUGIN_DATA['TextDomain']),
+                __("Votre Méta Description est un peu longue (actuel : %d caractères) mais reste dans une zone tolérable. Essayez de la maintenir sous les %d caractères.", DAFAPSEO_TEXTDOMAIN),
                 $length,
                 Config::CRITERES['longueur_meta_desc']['max']
             );
@@ -356,30 +356,30 @@ class Analyzer
      */
     private static function check_presence_mot_cle_h1(): array
     {
-        $label = __("Présence du mot-clé dans le Titre H1", PLUGIN_DATA['TextDomain']);
+        $label = __("Présence du mot-clé dans le Titre H1", DAFAPSEO_TEXTDOMAIN);
         $weight = self::get_weight(__FUNCTION__);
         // Récupération du H1. 
         // Dans WordPress, le H1 est souvent le titre de l'article (get_the_title($post_id)).
         $h1Title = self::$postData['h1_title'] ?? self::$postData['title'] ?? '';
         $keyword = self::$focusKeyword;
         $status = 'warn';
-        $suggestion = __("Le Titre H1 n'est pas optimal.", PLUGIN_DATA['TextDomain']);
+        $suggestion = __("Le Titre H1 n'est pas optimal.", DAFAPSEO_TEXTDOMAIN);
         $score = 0;
         if (empty($keyword)) {
-            $suggestion = __("Le mot-clé principal n'a pas été défini. Impossible d'analyser la présence dans le H1.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Le mot-clé principal n'a pas été défini. Impossible d'analyser la présence dans le H1.", DAFAPSEO_TEXTDOMAIN);
         } elseif (stripos($h1Title, $keyword) !== false) {
             $status = 'ok';
-            $suggestion = __("Excellent ! Le mot-clé principal est présent dans le Titre H1, confirmant la pertinence du sujet.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Excellent ! Le mot-clé principal est présent dans le Titre H1, confirmant la pertinence du sujet.", DAFAPSEO_TEXTDOMAIN);
             $score = $weight;
             // Si le H1 est très long ou si le KW est trop loin, une petite pénalité peut être appliquée.
             if (stripos(trim($h1Title), $keyword) > Config::CRITERES['presence_mot_cle_h1']['too_far']) {
                 $status = 'warn';
-                $suggestion = __("Le mot-clé est présent, mais il est placé loin du début du H1. Pour un impact maximal, essayez de le placer dans les premiers mots.", PLUGIN_DATA['TextDomain']);
+                $suggestion = __("Le mot-clé est présent, mais il est placé loin du début du H1. Pour un impact maximal, essayez de le placer dans les premiers mots.", DAFAPSEO_TEXTDOMAIN);
                 $score = round($weight * 0.75, 2); // Attribue 75% du poids (ex: 6 sur 8)
             }
         } else {
             $suggestion = sprintf(
-                __("Le mot-clé principal ('%s') est absent du Titre H1. Ceci est une erreur majeure. Assurez-vous que le **H1 contient votre mot-clé** pour signaler le sujet de l'article aux moteurs de recherche.", PLUGIN_DATA['TextDomain']),
+                __("Le mot-clé principal ('%s') est absent du Titre H1. Ceci est une erreur majeure. Assurez-vous que le **H1 contient votre mot-clé** pour signaler le sujet de l'article aux moteurs de recherche.", DAFAPSEO_TEXTDOMAIN),
                 $keyword
             );
             $score = 0;
@@ -402,19 +402,19 @@ class Analyzer
     private static function check_mot_cle_dans_intro(): array
     {
         $label = sprintf(
-            __("Mot-clé principal dans l'introduction (%d premiers mots)", PLUGIN_DATA['TextDomain']),
+            __("Mot-clé principal dans l'introduction (%d premiers mots)", DAFAPSEO_TEXTDOMAIN),
             Config::CRITERES['mot_cle_dans_intro']['max_words']
         );
         $weight = self::get_weight(__FUNCTION__);
         $keyword = self::$focusKeyword;
         $content = self::$postContent; // Contenu brut de l'article
         $status = 'warn';
-        $suggestion = __("L'analyse est incomplète ou le mot-clé est absent de l'introduction.", PLUGIN_DATA['TextDomain']);
+        $suggestion = __("L'analyse est incomplète ou le mot-clé est absent de l'introduction.", DAFAPSEO_TEXTDOMAIN);
         $score = 0;
         if (empty($keyword)) {
-            $suggestion = __("Le mot-clé principal n'est pas défini. Impossible d'analyser l'introduction.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Le mot-clé principal n'est pas défini. Impossible d'analyser l'introduction.", DAFAPSEO_TEXTDOMAIN);
         } elseif (empty($content)) {
-            $suggestion = __("Le contenu de l'article est vide ou n'a pas été chargé. Impossible d'analyser.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Le contenu de l'article est vide ou n'a pas été chargé. Impossible d'analyser.", DAFAPSEO_TEXTDOMAIN);
         } else {
             // 1. Nettoyer le contenu : supprimer le HTML pour ne compter que les mots du texte.
             $cleanContent = strip_tags($content);
@@ -429,13 +429,13 @@ class Analyzer
             if (stripos($introText, $keyword) !== false) {
                 $status = 'ok';
                 $suggestion = sprintf(
-                    __("Excellent ! Le mot-clé principal est présent dans les %d premiers mots, ce qui assure une bonne pertinence thématique dès le début.", PLUGIN_DATA['TextDomain']),
+                    __("Excellent ! Le mot-clé principal est présent dans les %d premiers mots, ce qui assure une bonne pertinence thématique dès le début.", DAFAPSEO_TEXTDOMAIN),
                     Config::CRITERES['mot_cle_dans_intro']['max_words']
                 );
                 $score = $weight;
             } else {
                 $suggestion = sprintf(
-                    __("Le mot-clé principal ('%s') est absent des %d premiers mots de l'article. C'est une omission importante pour le SEO : intégrez-le naturellement et rapidement.", PLUGIN_DATA['TextDomain']),
+                    __("Le mot-clé principal ('%s') est absent des %d premiers mots de l'article. C'est une omission importante pour le SEO : intégrez-le naturellement et rapidement.", DAFAPSEO_TEXTDOMAIN),
                     $keyword,
                     Config::CRITERES['mot_cle_dans_intro']['max_words']
                 );
@@ -459,7 +459,7 @@ class Analyzer
      */
     private static function check_longueur_contenu(): array
     {
-        $label = __("Longueur du contenu de l'article", PLUGIN_DATA['TextDomain']);
+        $label = __("Longueur du contenu de l'article", DAFAPSEO_TEXTDOMAIN);
         $weight = self::get_weight(__FUNCTION__);
         $content = self::$postContent; // Contenu brut de l'article
         $status = 'warn';
@@ -475,7 +475,7 @@ class Analyzer
             // OPTIMAL : > 1000 mots
             $status = 'ok';
             $suggestion = sprintf(
-                __("Excellent ! Votre article est long (%d mots), ce qui est idéal pour la profondeur thématique et le classement. (Objectif > %d mots)", PLUGIN_DATA['TextDomain']),
+                __("Excellent ! Votre article est long (%d mots), ce qui est idéal pour la profondeur thématique et le classement. (Objectif > %d mots)", DAFAPSEO_TEXTDOMAIN),
                 $wordCount,
                 Config::CRITERES['longueur_contenu']['min']
             );
@@ -483,7 +483,7 @@ class Analyzer
         } elseif ($wordCount >= (Config::CRITERES['longueur_contenu']['warn'] + Config::CRITERES['longueur_contenu']['min']) * 0.384) {
             // ACCEPTABLE : 500 à 999 mots
             $suggestion = sprintf(
-                __("La longueur de votre article est correcte (%d mots), mais il pourrait bénéficier de plus de détails et d'une plus grande profondeur. Visez un minimum de **%d mots**.", PLUGIN_DATA['TextDomain']),
+                __("La longueur de votre article est correcte (%d mots), mais il pourrait bénéficier de plus de détails et d'une plus grande profondeur. Visez un minimum de **%d mots**.", DAFAPSEO_TEXTDOMAIN),
                 $wordCount,
                 Config::CRITERES['longueur_contenu']['min']
             );
@@ -491,7 +491,7 @@ class Analyzer
         } elseif ($wordCount >= Config::CRITERES['longueur_contenu']['warn']) {
             // FAIBLE : 300 à 499 mots
             $suggestion = sprintf(
-                __("Votre contenu est relativement court (%d mots). Il manque probablement de profondeur. Le contenu mince est difficile à classer. **Ajoutez du développement pour atteindre au moins %d mots**.", PLUGIN_DATA['TextDomain']),
+                __("Votre contenu est relativement court (%d mots). Il manque probablement de profondeur. Le contenu mince est difficile à classer. **Ajoutez du développement pour atteindre au moins %d mots**.", DAFAPSEO_TEXTDOMAIN),
                 $wordCount,
                 Config::CRITERES['longueur_contenu']['warn']
             );
@@ -499,7 +499,7 @@ class Analyzer
         } else {
             // TRÈS FAIBLE/PÉNALISANT : < 300 mots
             $suggestion = sprintf(
-                __("Attention ! Votre article est beaucoup trop court (%d mots) et sera considéré comme du **contenu mince** par les moteurs de recherche. Il est impératif de le développer (Objectif > %d mots).", PLUGIN_DATA['TextDomain']),
+                __("Attention ! Votre article est beaucoup trop court (%d mots) et sera considéré comme du **contenu mince** par les moteurs de recherche. Il est impératif de le développer (Objectif > %d mots).", DAFAPSEO_TEXTDOMAIN),
                 $wordCount,
                 Config::CRITERES['longueur_contenu']['min']
             );
@@ -523,17 +523,17 @@ class Analyzer
      */
     private static function check_densite_mot_cle(): array
     {
-        $label = __("Densité du mot-clé principal", PLUGIN_DATA['TextDomain']);
+        $label = __("Densité du mot-clé principal", DAFAPSEO_TEXTDOMAIN);
         $weight = self::get_weight(__FUNCTION__);
         $keyword = self::$focusKeyword;
         $content = self::$postContent;
         $status = 'warn';
-        $suggestion = __("La densité du mot-clé n'est pas optimale.", PLUGIN_DATA['TextDomain']);
+        $suggestion = __("La densité du mot-clé n'est pas optimale.", DAFAPSEO_TEXTDOMAIN);
         $score = 0;
         if (empty($keyword)) {
-            $suggestion = __("Le mot-clé principal n'est pas défini. Impossible de calculer la densité.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Le mot-clé principal n'est pas défini. Impossible de calculer la densité.", DAFAPSEO_TEXTDOMAIN);
         } elseif (empty($content)) {
-            $suggestion = __("Le contenu de l'article est vide ou n'a pas été chargé. Impossible de calculer la densité.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Le contenu de l'article est vide ou n'a pas été chargé. Impossible de calculer la densité.", DAFAPSEO_TEXTDOMAIN);
         } else {
             // 1. Nettoyer et compter les mots.
             $cleanContent = strip_tags($content);
@@ -545,7 +545,7 @@ class Analyzer
                     'label' => $label,
                     'score' => $weight,
                     'status' => 'warn',
-                    'suggestion' => __("Le contenu est vide. La densité ne peut pas être calculée.", PLUGIN_DATA['TextDomain']),
+                    'suggestion' => __("Le contenu est vide. La densité ne peut pas être calculée.", DAFAPSEO_TEXTDOMAIN),
                     'points_obtenus' => 0
                 ];
             }
@@ -559,7 +559,7 @@ class Analyzer
             $density = ($keywordCount / $totalWordCount) * 100;
             $density = round($density, 2); // Arrondi à deux décimales
 
-            $suggestion = sprintf(__("Densité actuelle : %.2f%%", PLUGIN_DATA['TextDomain']), $density);
+            $suggestion = sprintf(__("Densité actuelle : %.2f%%", DAFAPSEO_TEXTDOMAIN), $density);
 
             // ------------------------------------------------
             // Évaluation des seuils (Optimal: 0.5% à 2.5%)
@@ -568,25 +568,25 @@ class Analyzer
             if ($density >= Config::CRITERES['densite_mot_cle']['min'] && $density <= Config::CRITERES['densite_mot_cle']['max']) {
                 // OPTIMAL
                 $status = 'ok';
-                $suggestion .= __(" La densité est excellente ! Elle est suffisante sans tomber dans le bourrage de mots-clés (keyword stuffing).", PLUGIN_DATA['TextDomain']);
+                $suggestion .= __(" La densité est excellente ! Elle est suffisante sans tomber dans le bourrage de mots-clés (keyword stuffing).", DAFAPSEO_TEXTDOMAIN);
                 $score = $weight;
             } elseif ($density < Config::CRITERES['densite_mot_cle']['min'] && $density >= Config::CRITERES['densite_mot_cle']['min'] / 5) {
                 // SOUS-OPTIMISÉ (Faible)
                 $status = 'warn';
                 $suggestion .= sprintf(
-                    __(" La densité est faible. Le mot-clé principal ('%s') apparaît trop peu souvent. Ajoutez-le quelques fois de plus dans le texte pour renforcer la pertinence.", PLUGIN_DATA['TextDomain']),
+                    __(" La densité est faible. Le mot-clé principal ('%s') apparaît trop peu souvent. Ajoutez-le quelques fois de plus dans le texte pour renforcer la pertinence.", DAFAPSEO_TEXTDOMAIN),
                     $keyword
                 );
                 $score = round($weight * 0.5, 2); // 50% du poids (ex: 5 sur 10)
             } elseif ($density > Config::CRITERES['densite_mot_cle']['max']) {
                 // SUR-OPTIMISÉ (Bourrage de mots-clés)
                 $status = 'warn';
-                $suggestion .= __(" Attention ! La densité est trop élevée. Cela peut être perçu comme du **bourrage de mots-clés** (keyword stuffing) et nuire à la lisibilité. Réduisez les occurrences en utilisant des synonymes ou des termes secondaires.", PLUGIN_DATA['TextDomain']);
+                $suggestion .= __(" Attention ! La densité est trop élevée. Cela peut être perçu comme du **bourrage de mots-clés** (keyword stuffing) et nuire à la lisibilité. Réduisez les occurrences en utilisant des synonymes ou des termes secondaires.", DAFAPSEO_TEXTDOMAIN);
                 $score = 0;
             } else {
                 // TRÈS SOUS-OPTIMISÉ (Quasi-absent)
                 $status = 'warn';
-                $suggestion .= __(" La densité est critique. Le mot-clé est presque absent du corps de l'article. C'est une erreur majeure de pertinence.", PLUGIN_DATA['TextDomain']);
+                $suggestion .= __(" La densité est critique. Le mot-clé est presque absent du corps de l'article. C'est une erreur majeure de pertinence.", DAFAPSEO_TEXTDOMAIN);
                 $score = 0;
             }
         }
@@ -610,21 +610,21 @@ class Analyzer
      */
     private static function check_presence_mots_cles_secondaires(): array
     {
-        $label = __("Richesse sémantique (Mots-clés secondaires/Synonymes)", PLUGIN_DATA['TextDomain']);
+        $label = __("Richesse sémantique (Mots-clés secondaires/Synonymes)", DAFAPSEO_TEXTDOMAIN);
         $weight = self::get_weight(__FUNCTION__);
         $content = self::$postContent;
         $status = 'warn';
-        //$suggestion = __("Le contenu manque de richesse sémantique.",PLUGIN_DATA['TextDomain']);
+        //$suggestion = __("Le contenu manque de richesse sémantique.",DAFAPSEO_TEXTDOMAIN);
         $score = 0;
         $secondaryKeywords = self::$secondaryKeywords;
         $minRequired = Config::CRITERES['presence_mots_cles_secondaires']['min'];
         $foundCount = 0;
         if (empty($secondaryKeywords)) {
-            $suggestion = __("Aucun mot-clé secondaire n'a été défini. C'est essentiel pour la richesse sémantique.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Aucun mot-clé secondaire n'a été défini. C'est essentiel pour la richesse sémantique.", DAFAPSEO_TEXTDOMAIN);
             // On peut attribuer un petit score pour ne pas bloquer l'analyse :
             $score = 2;
         } elseif (empty($content)) {
-            $suggestion = __("Le contenu de l'article est vide. Impossible d'analyser la richesse sémantique.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Le contenu de l'article est vide. Impossible d'analyser la richesse sémantique.", DAFAPSEO_TEXTDOMAIN);
         } else {
             $cleanContent = strip_tags($content);
 
@@ -644,7 +644,7 @@ class Analyzer
             if ($foundCount >= $targetCount) {
                 $status = 'ok';
                 $suggestion = sprintf(
-                    __("Excellent ! **%d** termes secondaires pertinents (synonymes et concepts connexes) ont été détectés, enrichissant la couverture sémantique du sujet.", PLUGIN_DATA['TextDomain']),
+                    __("Excellent ! **%d** termes secondaires pertinents (synonymes et concepts connexes) ont été détectés, enrichissant la couverture sémantique du sujet.", DAFAPSEO_TEXTDOMAIN),
                     $foundCount
                 );
                 $score = $weight;
@@ -652,13 +652,13 @@ class Analyzer
                 $status = 'warn';
                 $remaining = $targetCount - $foundCount;
                 $suggestion = sprintf(
-                    __("Seulement **%d** termes secondaires ont été trouvés. Il en manque au moins %d. Essayez d'intégrer plus de synonymes et de concepts connexes pour approfondir la thématique de l'article.", PLUGIN_DATA['TextDomain']),
+                    __("Seulement **%d** termes secondaires ont été trouvés. Il en manque au moins %d. Essayez d'intégrer plus de synonymes et de concepts connexes pour approfondir la thématique de l'article.", DAFAPSEO_TEXTDOMAIN),
                     $foundCount,
                     $remaining
                 );
                 $score = round($weight * 0.5, 2); // 50% du poids (ex: 2.5 sur 5)
             } else {
-                $suggestion = __("Aucun terme secondaire pertinent n'a été trouvé. Votre contenu est trop centré sur un seul mot-clé. Intégrez des **synonymes** et des mots du **champ lexical** pour améliorer la pertinence et le SEO sémantique.", PLUGIN_DATA['TextDomain']);
+                $suggestion = __("Aucun terme secondaire pertinent n'a été trouvé. Votre contenu est trop centré sur un seul mot-clé. Intégrez des **synonymes** et des mots du **champ lexical** pour améliorer la pertinence et le SEO sémantique.", DAFAPSEO_TEXTDOMAIN);
                 $score = 0;
             }
         }
@@ -679,17 +679,17 @@ class Analyzer
      */
     private static function check_presence_mot_cle_url(): array
     {
-        $label = __("Présence du mot-clé dans l'URL (slug)", PLUGIN_DATA['TextDomain']);
+        $label = __("Présence du mot-clé dans l'URL (slug)", DAFAPSEO_TEXTDOMAIN);
         $weight = self::get_weight(__FUNCTION__);
         $keyword = self::$focusKeyword;
         // Récupération de l'URL ou du slug de l'article.
         // Dans WordPress, c'est le champ 'post_name' ou le slug.
         $postSlug = self::$postData['post_slug'] ?? '';
         $status = 'warn';
-        $suggestion = __("L'URL de l'article n'est pas optimale.", PLUGIN_DATA['TextDomain']);
+        $suggestion = __("L'URL de l'article n'est pas optimale.", DAFAPSEO_TEXTDOMAIN);
         $score = 0;
         if (empty($keyword)) {
-            $suggestion = __("Le mot-clé principal n'est pas défini. Impossible d'analyser l'URL.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Le mot-clé principal n'est pas défini. Impossible d'analyser l'URL.", DAFAPSEO_TEXTDOMAIN);
             return [
                 'label' => $label,
                 'score' => $weight,
@@ -722,12 +722,12 @@ class Analyzer
             if ($slugLength <= 5) {
                 // Optimal : Mot-clé présent et URL courte.
                 $status = 'ok';
-                $suggestion = __("Parfait ! Le mot-clé principal est présent dans l'URL, qui est de plus courte et facile à lire.", PLUGIN_DATA['TextDomain']);
+                $suggestion = __("Parfait ! Le mot-clé principal est présent dans l'URL, qui est de plus courte et facile à lire.", DAFAPSEO_TEXTDOMAIN);
             } else {
                 // Avertissement : Mot-clé présent mais URL trop longue.
                 $status = 'warn';
                 $suggestion = sprintf(
-                    __("Le mot-clé est présent, mais l'URL semble trop longue (plus de %d mots importants). Essayez de la raccourcir pour une meilleure expérience utilisateur et SEO.", PLUGIN_DATA['TextDomain']),
+                    __("Le mot-clé est présent, mais l'URL semble trop longue (plus de %d mots importants). Essayez de la raccourcir pour une meilleure expérience utilisateur et SEO.", DAFAPSEO_TEXTDOMAIN),
                     $slugLength
                 );
                 $score = round($weight * 0.75, 2); // Petite pénalité (ex: 3.75 sur 5)
@@ -736,7 +736,7 @@ class Analyzer
             // Critique : Mot-clé absent de l'URL.
             $status = 'warn';
             $suggestion = sprintf(
-                __("Le mot-clé principal ('%s') est absent de l'URL. Modifiez le slug pour y inclure votre mot-clé et rendre l'URL plus descriptive.", PLUGIN_DATA['TextDomain']),
+                __("Le mot-clé principal ('%s') est absent de l'URL. Modifiez le slug pour y inclure votre mot-clé et rendre l'URL plus descriptive.", DAFAPSEO_TEXTDOMAIN),
                 $keyword
             );
             $score = 0;
@@ -758,17 +758,17 @@ class Analyzer
      */
     private static function check_maillage_interne(): array
     {
-        $label = __("Maillage interne (Liens vers votre site)", PLUGIN_DATA['TextDomain']);
+        $label = __("Maillage interne (Liens vers votre site)", DAFAPSEO_TEXTDOMAIN);
         $weight = self::get_weight(__FUNCTION__);
         $content = self::$postContent; // Contenu brut (HTML) de l'article
         $status = 'warn';
-        $suggestion = __("Le maillage interne n'est pas optimal.", PLUGIN_DATA['TextDomain']);
+        $suggestion = __("Le maillage interne n'est pas optimal.", DAFAPSEO_TEXTDOMAIN);
         $score = 0;
         $siteUrlBase = self::$postData['site_url'] ?? home_url();
         $minRequired = Config::CRITERES['maillage_interne']['min_liens'];
 
         if (empty($content)) {
-            $suggestion = __("Le contenu de l'article est vide. Impossible d'analyser le maillage interne.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Le contenu de l'article est vide. Impossible d'analyser le maillage interne.", DAFAPSEO_TEXTDOMAIN);
             return [
                 'label' => $label,
                 'score' => $weight,
@@ -801,7 +801,7 @@ class Analyzer
             // OPTIMAL
             $status = 'ok';
             $suggestion = sprintf(
-                __("Excellent ! Votre article contient **%d** liens internes, renforçant le maillage de votre site et la distribution du PageRank.", PLUGIN_DATA['TextDomain']),
+                __("Excellent ! Votre article contient **%d** liens internes, renforçant le maillage de votre site et la distribution du PageRank.", DAFAPSEO_TEXTDOMAIN),
                 $internalLinkCount
             );
             $score = $weight;
@@ -809,7 +809,7 @@ class Analyzer
             // ACCEPTABLE MAIS À AMÉLIORER
             $status = 'warn';
             $suggestion = sprintf(
-                __("Seulement **%d** liens internes trouvés. Il est fortement recommandé d'insérer au moins **%d liens internes** pour améliorer l'exploration et la pertinence thématique (SEO).", PLUGIN_DATA['TextDomain']),
+                __("Seulement **%d** liens internes trouvés. Il est fortement recommandé d'insérer au moins **%d liens internes** pour améliorer l'exploration et la pertinence thématique (SEO).", DAFAPSEO_TEXTDOMAIN),
                 $internalLinkCount,
                 $minRequired
             );
@@ -817,7 +817,7 @@ class Analyzer
         } else {
             // ABSENT
             $status = 'warn';
-            $suggestion = __("Pas de lien interne trouvé. Le maillage interne est un pilier du SEO ! Ajoutez immédiatement des liens vers d'autres articles pertinents de votre site.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Pas de lien interne trouvé. Le maillage interne est un pilier du SEO ! Ajoutez immédiatement des liens vers d'autres articles pertinents de votre site.", DAFAPSEO_TEXTDOMAIN);
             $score = 0;
         }
         return [
@@ -837,11 +837,11 @@ class Analyzer
      */
     private static function check_liens_externes(): array
     {
-        $label = __("Liens externes (vers des sources d'autorité)", PLUGIN_DATA['TextDomain']);
+        $label = __("Liens externes (vers des sources d'autorité)", DAFAPSEO_TEXTDOMAIN);
         $weight = self::get_weight(__FUNCTION__);
         $content = self::$postContent; // Contenu brut (HTML) de l'article
         $status = 'warn';
-        $suggestion = __("Les liens externes ne sont pas optimaux.", PLUGIN_DATA['TextDomain']);
+        $suggestion = __("Les liens externes ne sont pas optimaux.", DAFAPSEO_TEXTDOMAIN);
         $score = 0;
         // Simuler la base de l'URL du site (pour exclure les liens internes)
         $siteUrlBase = self::$postData['site_url'] ?? home_url();
@@ -849,7 +849,7 @@ class Analyzer
         $minRequired = Config::CRITERES['liens_externes']['min_liens'];
 
         if (empty($content)) {
-            $suggestion = __("Le contenu de l'article est vide. Impossible d'analyser les liens externes.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Le contenu de l'article est vide. Impossible d'analyser les liens externes.", DAFAPSEO_TEXTDOMAIN);
             return [
                 'label' => $label,
                 'score' => $weight,
@@ -883,7 +883,7 @@ class Analyzer
             // OPTIMAL
             $status = 'ok';
             $suggestion = sprintf(
-                __("Très bien ! Votre article contient **%d** lien(s) externe(s) vers des sources de qualité, renforçant la crédibilité de votre contenu.", PLUGIN_DATA['TextDomain']),
+                __("Très bien ! Votre article contient **%d** lien(s) externe(s) vers des sources de qualité, renforçant la crédibilité de votre contenu.", DAFAPSEO_TEXTDOMAIN),
                 $externalLinkCount
             );
             $score = $weight;
@@ -891,14 +891,14 @@ class Analyzer
             // FAIBLE
             $status = 'warn';
             $suggestion = sprintf(
-                __('Peu de liens externes (%d). Il en faudrait au moins %d.', PLUGIN_DATA['TextDomain']),
+                __('Peu de liens externes (%d). Il en faudrait au moins %d.', DAFAPSEO_TEXTDOMAIN),
                 $externalLinkCount,
                 $minRequired
             );
         } else {
             // ABSENT
             $status = 'warn';
-            $suggestion = __("Pas de lien externe trouvé. Ajoutez **au moins un lien sortant** vers une source d'autorité et pertinente pour valider vos informations (E-E-A-T).", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Pas de lien externe trouvé. Ajoutez **au moins un lien sortant** vers une source d'autorité et pertinente pour valider vos informations (E-E-A-T).", DAFAPSEO_TEXTDOMAIN);
             $score = 0;
         }
         return [
@@ -919,7 +919,7 @@ class Analyzer
      */
     private static function check_optimisation_images(): array
     {
-        $label = __("Optimisation des images (Texte Alternatif)", PLUGIN_DATA['TextDomain']);
+        $label = __("Optimisation des images (Texte Alternatif)", DAFAPSEO_TEXTDOMAIN);
         $weight = self::get_weight(__FUNCTION__);
         $content = self::$postContent;
         $keyword = self::$focusKeyword;
@@ -930,9 +930,9 @@ class Analyzer
         $kwInAltCount = 0;
 
         if (empty($content)) {
-            $suggestion = __("Le contenu de l'article est vide. Impossible d'analyser les images.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Le contenu de l'article est vide. Impossible d'analyser les images.", DAFAPSEO_TEXTDOMAIN);
         } elseif (empty($keyword)) {
-            $suggestion = __("Le mot-clé principal n'est pas défini. Impossible de vérifier l'inclusion du mot-clé dans le texte alternatif.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Le mot-clé principal n'est pas défini. Impossible de vérifier l'inclusion du mot-clé dans le texte alternatif.", DAFAPSEO_TEXTDOMAIN);
         } else {
             // 1. Trouver toutes les balises <img> dans le contenu
             // Utilisation d'une expression régulière simple pour capturer les balises <img>
@@ -943,7 +943,7 @@ class Analyzer
             $imageCount = count($images);
 
             if ($imageCount === 0) {
-                $suggestion = __("Aucune image n'a été trouvée dans le contenu. Il est fortement recommandé d'ajouter des images pertinentes pour améliorer l'expérience utilisateur et l'accessibilité.", PLUGIN_DATA['TextDomain']);
+                $suggestion = __("Aucune image n'a été trouvée dans le contenu. Il est fortement recommandé d'ajouter des images pertinentes pour améliorer l'expérience utilisateur et l'accessibilité.", DAFAPSEO_TEXTDOMAIN);
                 // On attribue un score de 50% du poids si aucune image n'est trouvée pour ne pas trop pénaliser
                 // si le contenu n'en requiert pas absolument, mais on met un avertissement.
                 $score = round($weight * 0.5, 2);
@@ -970,7 +970,7 @@ class Analyzer
                     // OPTIMAL : Au moins une image a un alt text avec le mot-clé
                     $status = 'ok';
                     $suggestion = sprintf(
-                        __("Parfait ! **%d** image(s) possède(nt) un attribut `alt` contenant le mot-clé principal. Continuez d'optimiser toutes vos images.", PLUGIN_DATA['TextDomain']),
+                        __("Parfait ! **%d** image(s) possède(nt) un attribut `alt` contenant le mot-clé principal. Continuez d'optimiser toutes vos images.", DAFAPSEO_TEXTDOMAIN),
                         $kwInAltCount
                     );
                     $score = $weight;
@@ -978,7 +978,7 @@ class Analyzer
                     // ACCEPTABLE : Au moins une image a un alt text, mais sans le mot-clé
                     $status = 'warn';
                     $suggestion = sprintf(
-                        __("Toutes les images n'ont pas un texte alternatif optimisé. **%d** image(s) ont un `alt` text, mais aucune ne contient le mot-clé principal. Intégrez le mot-clé dans au moins une description d'image.", PLUGIN_DATA['TextDomain']),
+                        __("Toutes les images n'ont pas un texte alternatif optimisé. **%d** image(s) ont un `alt` text, mais aucune ne contient le mot-clé principal. Intégrez le mot-clé dans au moins une description d'image.", DAFAPSEO_TEXTDOMAIN),
                         $altCount
                     );
                     $score = round($weight * 0.7, 2); // 70% du poids (ex: 3.5 sur 5)
@@ -986,7 +986,7 @@ class Analyzer
                     // CRITIQUE : Aucune image avec un alt text (ou alt text vide)
                     $status = 'warn';
                     $suggestion = sprintf(
-                        __("Attention ! Aucune des **%d** image(s) n'a d'attribut `alt` renseigné ou il est vide. L'attribut `alt` est essentiel pour l'accessibilité et le référencement des images. Corrigez immédiatement.", PLUGIN_DATA['TextDomain']),
+                        __("Attention ! Aucune des **%d** image(s) n'a d'attribut `alt` renseigné ou il est vide. L'attribut `alt` est essentiel pour l'accessibilité et le référencement des images. Corrigez immédiatement.", DAFAPSEO_TEXTDOMAIN),
                         $imageCount
                     );
                     $score = 0;
@@ -1011,12 +1011,12 @@ class Analyzer
      */
     private static function check_lisibilite_headings(): array
     {
-        $label = __("Structure des titres (Hn) et inclusion du mot-clé", PLUGIN_DATA['TextDomain']);
+        $label = __("Structure des titres (Hn) et inclusion du mot-clé", DAFAPSEO_TEXTDOMAIN);
         $weight = self::get_weight(__FUNCTION__);
         $content = self::$postContent;
         $keyword = self::$focusKeyword;
         $status = 'warn';
-        $suggestion = __("La structure des titres n'est pas optimisée.", PLUGIN_DATA['TextDomain']);
+        $suggestion = __("La structure des titres n'est pas optimisée.", DAFAPSEO_TEXTDOMAIN);
         $score = 0;
 
         $kwInSubheading = false;
@@ -1027,7 +1027,7 @@ class Analyzer
         $h1Found = false;
 
         if (empty($content)) {
-            $suggestion = __("Le contenu de l'article est vide. Impossible d'analyser la structure des titres.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Le contenu de l'article est vide. Impossible d'analyser la structure des titres.", DAFAPSEO_TEXTDOMAIN);
         } else {
             // 1. Trouver tous les titres H1 à H6.
             // Le /s permet d'inclure les sauts de ligne dans la correspondance de .
@@ -1041,7 +1041,7 @@ class Analyzer
                     // A. Vérification de l'unicité du H1 (si présent dans le contenu)
                     if ($h1Found) {
                         $hasStructuralIssue = true;
-                        $suggestion = __("CRITIQUE: Plusieurs balises H1 détectées dans le contenu. Un article ne doit avoir qu'**un seul H1**.", PLUGIN_DATA['TextDomain']);
+                        $suggestion = __("CRITIQUE: Plusieurs balises H1 détectées dans le contenu. Un article ne doit avoir qu'**un seul H1**.", DAFAPSEO_TEXTDOMAIN);
                         $score = 0; // Pénalité maximale pour une erreur critique.
                         break;
                     }
@@ -1051,7 +1051,7 @@ class Analyzer
                     // B. Vérification du saut de niveau (ex: H2 après H1, puis H3 après H2 ...)
                     $hasStructuralIssue = true;
                     $suggestion = sprintf(
-                        __("Erreur de hiérarchie: Saut de niveau détecté (ex: H%d est suivi de H%d). Respectez la séquence: H2 après H1, H3 après H2, etc. pour une meilleure lisibilité.", PLUGIN_DATA['TextDomain']),
+                        __("Erreur de hiérarchie: Saut de niveau détecté (ex: H%d est suivi de H%d). Respectez la séquence: H2 après H1, H3 après H2, etc. pour une meilleure lisibilité.", DAFAPSEO_TEXTDOMAIN),
                         $currentLevel,
                         $level
                     );
@@ -1072,14 +1072,14 @@ class Analyzer
             if (!$hasStructuralIssue) {
                 // Structure validée (pas de H1 multiple, pas de saut de niveau).
                 $status = 'ok';
-                $suggestion = __("La structure des titres est logique et bien organisée.", PLUGIN_DATA['TextDomain']);
+                $suggestion = __("La structure des titres est logique et bien organisée.", DAFAPSEO_TEXTDOMAIN);
                 $score = $weight; // 8 points initialement
 
                 // Malus si le mot-clé est absent des sous-titres
                 if (!empty($keyword) && !$kwInSubheading) {
                     $status = 'warn';
                     $suggestion .= sprintf(
-                        __(" Cependant, le mot-clé principal ('%s') n'est pas inclus dans un sous-titre (H2 ou H3). Intégrez-le naturellement dans un sous-titre pour renforcer la pertinence.", PLUGIN_DATA['TextDomain']),
+                        __(" Cependant, le mot-clé principal ('%s') n'est pas inclus dans un sous-titre (H2 ou H3). Intégrez-le naturellement dans un sous-titre pour renforcer la pertinence.", DAFAPSEO_TEXTDOMAIN),
                         $keyword
                     );
                     $score = round($weight * 0.75, 2); // Malus de 25%
@@ -1104,11 +1104,11 @@ class Analyzer
      */
     private static function check_longueur_paragraphes(): array
     {
-        $label = __("Longueur des blocs de texte (P, TD, TH, LI, DIV)", PLUGIN_DATA['TextDomain']);
+        $label = __("Longueur des blocs de texte (P, TD, TH, LI, DIV)", DAFAPSEO_TEXTDOMAIN);
         $weight = self::get_weight(__FUNCTION__);
         $content = self::$postContent;
         $status = 'warn';
-        $suggestion = __("La lisibilité est impactée par la longueur des blocs de texte.", PLUGIN_DATA['TextDomain']);
+        $suggestion = __("La lisibilité est impactée par la longueur des blocs de texte.", DAFAPSEO_TEXTDOMAIN);
         $score = 0;
 
         $maxWordsPerBlock = Config::CRITERES['longueur_paragraphes']['max_mots'];
@@ -1116,7 +1116,7 @@ class Analyzer
         $totalBlocks = 0;
 
         if (empty($content)) {
-            $suggestion = __("Le contenu de l'article est vide. Impossible d'analyser la longueur des paragraphes.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Le contenu de l'article est vide. Impossible d'analyser la longueur des paragraphes.", DAFAPSEO_TEXTDOMAIN);
         } else {
             // 1. Définir les balises considérées comme des "blocs de texte"
             // P, TD, TH, LI sont des blocs de contenu spécifiques.
@@ -1134,7 +1134,7 @@ class Analyzer
             $totalBlocks = count($blocks);
 
             if ($totalBlocks === 0) {
-                $suggestion = __("Aucun bloc de texte significatif (<p>, <td>, etc.) n'a été trouvé. Assurez-vous que l'article contient du contenu structuré.", PLUGIN_DATA['TextDomain']);
+                $suggestion = __("Aucun bloc de texte significatif (<p>, <td>, etc.) n'a été trouvé. Assurez-vous que l'article contient du contenu structuré.", DAFAPSEO_TEXTDOMAIN);
                 $score = 0;
             } else {
                 // 3. Compter les mots dans chaque bloc et identifier les trop longs.
@@ -1154,7 +1154,7 @@ class Analyzer
                 if ($ratioLong <= 10 || $longBlocksCount === 0) {
                     $status = 'ok';
                     $suggestion = sprintf(
-                        __("Excellent ! Seuls %d blocs de texte(s) sur %d dépassent la limite de %d mots. La lisibilité est bonne.", PLUGIN_DATA['TextDomain']),
+                        __("Excellent ! Seuls %d blocs de texte(s) sur %d dépassent la limite de %d mots. La lisibilité est bonne.", DAFAPSEO_TEXTDOMAIN),
                         $longBlocksCount,
                         $totalBlocks,
                         $maxWordsPerBlock
@@ -1163,7 +1163,7 @@ class Analyzer
                 } elseif ($ratioLong <= 30) {
                     $status = 'warn';
                     $suggestion = sprintf(
-                        __("Attention ! %d blocs sur %d (soit %.1f%%) sont trop longs. Ceci inclut des paragraphes, des cellules de tableau, ou des éléments de liste. Essayez de les diviser en blocs de texte plus courts (max **%d mots**) pour améliorer la lisibilité sur mobile.", PLUGIN_DATA['TextDomain']),
+                        __("Attention ! %d blocs sur %d (soit %.1f%%) sont trop longs. Ceci inclut des paragraphes, des cellules de tableau, ou des éléments de liste. Essayez de les diviser en blocs de texte plus courts (max **%d mots**) pour améliorer la lisibilité sur mobile.", DAFAPSEO_TEXTDOMAIN),
                         $longBlocksCount,
                         $totalBlocks,
                         $ratioLong,
@@ -1173,7 +1173,7 @@ class Analyzer
                 } else {
                     $status = 'warn';
                     $suggestion = sprintf(
-                        __("CRITIQUE : Une majorité de vos blocs de texte (%.1f%%) sont trop longs. Cela nuit sévèrement à la lecture rapide et à l'expérience utilisateur. **Divisez-les**.", PLUGIN_DATA['TextDomain']),
+                        __("CRITIQUE : Une majorité de vos blocs de texte (%.1f%%) sont trop longs. Cela nuit sévèrement à la lecture rapide et à l'expérience utilisateur. **Divisez-les**.", DAFAPSEO_TEXTDOMAIN),
                         $ratioLong
                     );
                     $score = 0;
@@ -1197,14 +1197,14 @@ class Analyzer
      */
     private static function check_usage_voix_passive(): array
     {
-        $label = __("Usage de la voix passive", PLUGIN_DATA['TextDomain']);
+        $label = __("Usage de la voix passive", DAFAPSEO_TEXTDOMAIN);
         $weight = self::get_weight(__FUNCTION__);
         $content = self::$postContent;
         $status = 'warn';
-        $suggestion = __("L'usage de la voix passive est trop élevé.", PLUGIN_DATA['TextDomain']);
+        $suggestion = __("L'usage de la voix passive est trop élevé.", DAFAPSEO_TEXTDOMAIN);
         $score = 0;
         if (empty($content)) {
-            $suggestion = __("Le contenu de l'article est vide. Impossible d'analyser l'usage de la voix passive.", PLUGIN_DATA['TextDomain']);
+            $suggestion = __("Le contenu de l'article est vide. Impossible d'analyser l'usage de la voix passive.", DAFAPSEO_TEXTDOMAIN);
         } else {
             $cleanContent = strip_tags($content);
 
@@ -1214,7 +1214,7 @@ class Analyzer
             $sentenceCount = preg_match_all('/[.?!]+(?:\s|$)/', $cleanContent, $matches);
 
             if ($sentenceCount === 0) {
-                $suggestion = __("Moins d'une phrase détectée. Impossible d'analyser la voix passive.", PLUGIN_DATA['TextDomain']);
+                $suggestion = __("Moins d'une phrase détectée. Impossible d'analyser la voix passive.", DAFAPSEO_TEXTDOMAIN);
                 return [
                     'label' => $label,
                     'score' => $weight,
@@ -1250,7 +1250,7 @@ class Analyzer
             $passiveRatio = round($passiveRatio, 2);
 
             $suggestion = sprintf(
-                __("Ratio de phrases à la voix passive : **%.1f%%** sur %d phrases.", PLUGIN_DATA['TextDomain']),
+                __("Ratio de phrases à la voix passive : **%.1f%%** sur %d phrases.", DAFAPSEO_TEXTDOMAIN),
                 $passiveRatio,
                 $sentenceCount
             );
@@ -1259,17 +1259,17 @@ class Analyzer
             // Optimal: <= 10%
             if ($passiveRatio <= Config::CRITERES['usage_voix_passive']['max_percent']) {
                 $status = 'ok';
-                $suggestion .= __(" Excellent ! L'usage de la voix passive est très faible. Le contenu est clair et dynamique.", PLUGIN_DATA['TextDomain']);
+                $suggestion .= __(" Excellent ! L'usage de la voix passive est très faible. Le contenu est clair et dynamique.", DAFAPSEO_TEXTDOMAIN);
                 $score = $weight;
             } elseif ($passiveRatio <= Config::CRITERES['usage_voix_passive']['warn_percent']) {
                 // Tolérable mais à surveiller: 10% < ratio <= 15%
                 $status = 'warn';
-                $suggestion .= __(" Le ratio est tolérable mais pourrait être amélioré. Essayez de reformuler certaines phrases pour utiliser la voix active.", PLUGIN_DATA['TextDomain']);
+                $suggestion .= __(" Le ratio est tolérable mais pourrait être amélioré. Essayez de reformuler certaines phrases pour utiliser la voix active.", DAFAPSEO_TEXTDOMAIN);
                 $score = round($weight * 0.5, 2); // 0.5 point
             } else {
                 // Critère non rempli: > 15%
                 $status = 'warn';
-                $suggestion .= __(" L'usage de la voix passive est trop élevé. Cela rend votre texte lourd et moins direct. **Reformulez les phrases concernées** pour passer à la voix active.", PLUGIN_DATA['TextDomain']);
+                $suggestion .= __(" L'usage de la voix passive est trop élevé. Cela rend votre texte lourd et moins direct. **Reformulez les phrases concernées** pour passer à la voix active.", DAFAPSEO_TEXTDOMAIN);
                 $score = 0;
             }
         }

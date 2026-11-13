@@ -22,7 +22,7 @@ class SettingsPage
     public static function addMenu(): void
     {
         add_options_page(
-            __(self::PAGE_TITLE, PLUGIN_DATA['TextDomain']),
+            __(self::PAGE_TITLE, DAFAPSEO_TEXTDOMAIN),
             'Dafap SEO',
             'manage_options',
             Config::PLUGIN_SLUG,
@@ -33,7 +33,7 @@ class SettingsPage
     public static function add_settings_link(array $links): array
     {
         $path = admin_url('options-general.php?page=' . Config::PLUGIN_SLUG);
-        $settings_link = '<a href="' . $path . '">' . __('Settings', PLUGIN_DATA['TextDomain']) . '</a>';
+        $settings_link = '<a href="' . $path . '">' . __('Settings', DAFAPSEO_TEXTDOMAIN) . '</a>';
         array_unshift($links, $settings_link);
         return $links;
     }

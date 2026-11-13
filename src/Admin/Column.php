@@ -11,7 +11,7 @@ class Column
      */
     public static function add(array $columns): array
     {
-        $columns[Score::COLUMN_NAME] = __('Score SEO', PLUGIN_DATA['TextDomain']);
+        $columns[Score::COLUMN_NAME] = __('Score SEO', DAFAPSEO_TEXTDOMAIN);
         return $columns;
     }
 
