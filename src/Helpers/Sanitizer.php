@@ -103,14 +103,16 @@ class Sanitizer
      * - Vérifie que l'ID contient exactement 16 chiffres.
      * - Retourne l'ID nettoyé ou null si invalide.
      */
-    public static function fbAppId(string $appId): ?string
+    public static function fbAppId(?string $appId): ?string
     {
-        // Supprimer tous les caractères non numériques
-        $cleaned = preg_replace('/\D/', '', $appId);
+        if ($appId !== null) {
+            // Supprimer tous les caractères non numériques
+            $cleaned = preg_replace('/\D/', '', $appId);
 
-        // Vérifier que l'ID contient exactement 16 chiffres
-        if (strlen($cleaned) === 16) {
-            return $cleaned;
+            // Vérifier que l'ID contient exactement 16 chiffres
+            if (strlen($cleaned) === 16) {
+                return $cleaned;
+            }
         }
 
         return null;

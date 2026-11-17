@@ -4,7 +4,7 @@
  * Description: Évalue le score SEO des articles WordPress et optimise leur visibilité sociale avec des métadonnées enrichies.
  * Plugin URI: https://github.com/dafap/dafap-seo
  * Update URI: https://github.com/dafap/dafap-seo
- * Version: 1.1.0
+ * Version: 1.1.1
  * Tested up to: 7.1
  * Author: Alain Pomirol
  * Author URI: https://dafap.fr
